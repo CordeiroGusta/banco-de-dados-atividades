@@ -1,5 +1,6 @@
 /* CREATING THE ENVIROMENT */
 create database db_aula10;
+use db_aula10;
 
 create table tb_books (
     book_id int not null auto_increment primary key,
@@ -301,3 +302,29 @@ select
 	sum(case when available = 'True' then 1 else 0 end) as total_available_books,
     sum(case when available = 'False' then 1 else 0 end) as total_unavailable_books
 from tb_books;
+
+-- 24. Liste os livros agrupados por século (ano_publicacao/100), e a quantidade de livros por século.
+select
+	floor(publish_year / 100) as century,
+	count(*)
+from tb_books
+group by floor(publish_year / 100);
+
+-- 25. Liste os livros que foram publicados no mesmo ano de algum outro livro (ano com mais de um título).
+select
+	title,
+    publish_year
+from tb_books
+where publish_year in (
+	select 
+		publish_year
+	from tb_books 
+    group by publish_year
+    having count(*) > 1);
+    
+-- 26. Liste os autores que só têm livros indisponíveis.
+select
+	author
+from tb_books
+group by author
+having sum(case when available = 'True' then 1 else 0 end) = 0;
