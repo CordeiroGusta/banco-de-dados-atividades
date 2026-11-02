@@ -252,4 +252,52 @@ update tb_books
 set author = upper(author)
 where author = "H.G. Wells";
 
+/* PARTE 4 – CONSULTAS (SELECT) */
+-- 17. Liste todos os autores e a quantidade de livros que possuem na tabela.
+select
+	author,
+    count(*) as books_written
+from tb_books
+group by author;
 
+-- 18. Mostre os autores que possuem mais de 2 livros cadastrados.
+select
+	author,
+    count(*) as books_written
+from tb_books
+group by author
+having books_written > 2;
+
+-- 19. Apresente a média do ano de publicação dos livros disponíveis.
+select
+	count(title) as books_available,
+	round(avg(publish_year)) as average_publish_year
+from tb_books
+where available = 'True';
+
+-- 20. Liste os livros publicados antes da média geral de ano de publicação.
+select
+	*
+from tb_books
+where publish_year < (select avg(publish_year) from tb_books);
+
+-- 21. Liste os autores e a média de ano de publicação de seus livros, ordenados do mais novo para o mais antigo.
+select
+	author,
+    round(avg(publish_year)) as average_publish_year
+from tb_books
+group by author
+order by average_publish_year desc;
+
+-- 22. Liste os livros com título contendo a letra 'e' ordenados alfabeticamente.
+select
+	*
+from tb_books
+where title like '%e%'
+order by title asc;
+
+-- 23. Conte quantos livros estão disponíveis e quantos estão indisponíveis.
+select
+	sum(case when available = 'True' then 1 else 0 end) as total_available_books,
+    sum(case when available = 'False' then 1 else 0 end) as total_unavailable_books
+from tb_books;
