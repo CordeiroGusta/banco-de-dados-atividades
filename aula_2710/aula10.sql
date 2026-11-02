@@ -138,3 +138,118 @@ where book_id = (select book_id from tb_books where title like "Odisséia");
 update tb_books
 set title = "Odisseia"
 where book_id = 24;
+
+/* NÍVEL 2 - INTERMEDIARIO */
+-- 07. Marque como disponível todos os livros do autor 'George Orwell'.
+select 
+	*
+from tb_books
+where author = "George Orwell"
+and available = 'True';
+
+update tb_books
+set available = 'True'
+where author = "George Orwell"
+and available = 'True';
+
+-- 08. Atualize o ano de publicação para 2000 nos livros do autor 'J.K. Rowling'.
+select
+	*
+from tb_books
+where author = "J.K. Rowling";
+
+update tb_books
+set publish_year = 2000
+where author = "J.K. Rowling";
+
+-- 09. Marque como indisponíveis todos os livros publicados antes do ano 1900.
+select 
+	*
+from tb_books
+where publish_year < 1900;
+
+update tb_books
+set available = 'False'
+where publish_year < 1900;
+
+-- 10. Atualize todos os livros do autor 'J.R.R. Tolkien' para estarem indisponíveis.
+select
+	*
+from tb_books
+where author = "J.R.R. Tolkien";
+
+update tb_books
+set available = 'False'
+where author = "J.R.R. Tolkien";
+
+-- 11. Corrija o título 'A Hora da Estrela' para 'A Hora da Estrela - Edição Definitiva'.
+select
+	*
+from tb_books
+where title = "A Hora da Estrela";
+
+update tb_books
+set title = "A Hora da Estrela - Edição Definitiva"
+where title = "A Hora da Estrela"
+and author = "Clarice Lispector";
+
+select
+	*
+from tb_books
+where title like "%A Hora da Estrela%";
+
+/* NÍVEL 3 – AVANÇADO */
+-- 12. Marque como disponível todos os livros com título que contenha 'Harry Potter'.
+select 
+	*
+from tb_books
+where title like "%Harry Potter%";
+
+update tb_books
+set available = 'True'
+where title like "%Harry Potter%"
+and author = "J.K. Rowling";
+
+-- 13. Adicione ' - Volume Único' ao final de todos os títulos dos livros do autor 'Victor Hugo'.
+select
+	*
+from tb_books
+where author = "Victor Hugo";
+
+# concat(str1, str2, str3, ..., strn), act just like the concat function in excel, or in this case, a string interpolation
+update tb_books
+set title = concat(title, " - Volume Único")
+where author = "Victor Hugo";
+
+-- 14. Atualize os títulos dos livros de 'Franz Kafka' para iniciarem com '[Kafka] '.
+select
+	*
+from tb_books
+where author = "Franz Kafka";
+
+update tb_books
+set title = concat("[Kafka] ", title)
+where author = "Franz Kafka";
+
+-- 15. Marque como indisponíveis todos os livros entre os anos de 1940 e 1980 (inclusive).
+select
+	*
+from tb_books
+where publish_year between 1940 and 1980;
+
+update tb_books
+set available = 'False'
+where publish_year between 1940 and 1980;
+
+-- 16. Atualize o autor 'H.G. Wells' para aparecer em letras maiúsculas.
+select
+	*
+from tb_books
+where author = "H.G. Wells";
+
+# upper(str), turns the char upper case on a string
+update tb_books
+set author = upper(author)
+where author = "H.G. Wells";
+
+
